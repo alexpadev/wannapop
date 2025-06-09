@@ -1,0 +1,82 @@
+<div id="flashObjective"></div>
+<div id="product-details" class="container mt-4">
+    <div class="card shadow-sm">
+        <img src="{{ base_url }}/{{ product.photo }}" class="card-img-top" alt="{{ product.title }}" style="height: 300px; object-fit: cover;">
+
+        <div class="card-body">
+            <h3 class="card-title">{{ product.title }}</h3>
+            <span class="badge bg-primary">{{ product.category.name }}</span>
+            <span class="badge bg-secondary">{{ product.status.name }}</span>
+
+            <p class="card-text mt-3">{{ product.description }}</p>
+            <p class="card-text"><strong>Precio:</strong> {{ product.price }} €</p>
+
+            <p class="card-text"><strong>Verificado:</strong>
+                {% if product.confirmed %}
+                    <span class="badge bg-success">Sí</span>
+                {% else %}
+                    <span class="badge bg-danger">No</span>
+                {% endif %}
+            </p>
+
+            <div class="d-flex align-items-center mt-4">
+                <a href="/users/{{ product.seller_id }}" class="text-center">
+                    <img src="{{ base_url }}/{{ product.seller.avatar }}" alt="{{ product.seller.name }}" class="rounded-circle me-3" style="width: 50px; height: 50px; object-fit: cover;">
+                </a>
+                <div>
+                    <h6 class="mb-0">{{ product.seller.name }}</h6>
+                    <small class="text-muted">{{ product.seller.email }}</small>
+                </div>
+            </div>
+
+            <p class="text-muted mt-2"><small><strong>Publicado el:</strong> {{ product.created }}</small></p>
+
+            {% if product.confirmed %}
+                <p class="badge bg-danger">Este producto ya ha sido vendido.</p>
+            {% else %}
+                {% set has_offer = false %}
+                {% for order in product.orders %}
+                    {% if order.buyer_id == session.id %}
+                        {% set has_offer = true %}
+                    {% endif %}
+                {% endfor %}
+
+                <div id="estatusProducto">
+                    {% if has_offer %}
+                        <p class="badge bg-success">Ya has enviado una oferta para este producto.</p>
+                    {% else %}
+                        {% if product.seller_id != session.id %}
+                            <button class="btn btn-success text-white" onclick="hacerOferta({{product.id}})">Realizar oferta</button>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="card-footer">
+            {% if product.orders | length == 0 %}
+                <p class="text-muted">Este producto no tiene pedidos.</p>
+            {% else %}
+                <h5>Pedidos</h5>
+                <ul class="list-group list-group-flush" id="list-items">
+                    {% for order in product.orders %}
+                        <li class="list-group-item" id="list-item-orderID-{{order.id}}">
+                            {% if order.buyer_id == session.id %}
+                                {% if product.confirmed == false %}
+                                    <button class="btn btn-success text-white" id="updateOfferBtn" onclick="actualizarOferta({{order.id}})">Actualizar oferta</button>
+                                    <button class="btn btn-danger text-white" id="updateOfferBtn" onclick="cancelarOferta({{order.id}})">Cancelar oferta</button>
+                                {% endif %}
+                            {% endif %}
+
+                            <p><strong>Comprador ID:</strong> {{ order.buyer_id }}</p>
+                            <p id="precio-orderID-{{order.id}}"><strong>Oferta:</strong> {{ order.offer }} €</p>
+                            <p><strong>Fecha:</strong> {{ order.created }}</p>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+    </div>
+</div>
+<br>
+<br>

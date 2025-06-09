@@ -1,0 +1,101 @@
+<div id="flashObjective"></div>
+<div id="product-list" class="container">
+    <div class="row">
+        <div class="col-12 col-md-3">
+            <div id="filters" class="card p-3 shadow-sm" style="background-color: #f8f9fa; border-radius: 8px;">
+                <h5 class="text-center mb-3" style="font-weight: bold; color: #495057;">Filtros</h5>
+                <form id="product-search-form">
+                    <div class="mb-3">
+                        <label for="title" class="form-label" style="font-size: 0.9em; color: #6c757d;">Nombre del producto</label>
+                        <input 
+                            type="search" 
+                            id="title" 
+                            name="title" 
+                            class="form-control" 
+                            placeholder="Buscar productos..."
+                            value="{{ title | default('') }}"
+                            style="border-radius: 4px;"
+                        >
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="category" class="form-label" style="font-size: 0.9em; color: #6c757d;">Categoría</label>
+                        <select id="category" name="category" class="form-select" style="border-radius: 4px;">
+                            <option value="">Todas</option>
+                            <option value="3" {% if category == 'joguines' %}selected{% endif %}>Joguines</option>
+                            <option value="1" {% if category == 'tecnologia' %}selected{% endif %}>Tecnologia</option>
+                            <option value="2" {% if category == 'esport' %}selected{% endif %}>Esport</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" style="font-size: 0.9em; color: #6c757d;">Precio</label>
+                        <div style="display: flex; align-items: center;">
+                            <input type="number" id="price_min" name="price_min" class="form-control" placeholder="Mínimo" value="" style="margin-right: 10px; border-radius: 4px; width: 45%;">
+                            <input type="number" id="price_max" name="price_max" class="form-control" placeholder="Máximo" value="" style="border-radius: 4px; width: 45%;">
+                        </div>
+                    </div>
+
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" id="not-sold" name="not_sold" class="form-check-input" style="border-radius: 4px;">
+                        <label for="not-sold" class="form-check-label" style="font-size: 0.9em; color: #6c757d;">Buscar solo productos no vendidos</label>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="sort" class="form-label" style="font-size: 0.9em; color: #6c757d;">Ordenar por</label>
+                        <select id="sort" name="sort" class="form-select" style="border-radius: 4px;">
+                            <option value="price_asc" {% if sort == 'price_asc' %}selected{% endif %}>Precio (ascendente)</option>
+                            <option value="price_desc" {% if sort == 'price_desc' %}selected{% endif %}>Precio (descendiente)</option>
+                            <option value="date_desc" {% if sort == 'date_desc' %}selected{% endif %}>Fecha (más reciente)</option>
+                            <option value="date_asc" {% if sort == 'date_asc' %}selected{% endif %}>Fecha (menos reciente)</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100" style="margin-top: 10px; border-radius: 4px;">Buscar</button>
+                </form>
+            </div>
+            <br>
+        </div>
+
+        <div class="col-md-9">
+            <div id="scrollable-product-list" class="scroll-container" style="max-height: 600px; overflow-y: auto; overflow-x: hidden; padding-right: 10px;">
+                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                    {% for product in products %}
+                    <div class="col">
+                        <div class="card h-100 shadow-sm">
+                            <div class="card-body text-center" style="padding: 15px;">
+                                {% if product.confirmed %}
+                                    <a href="/products/{{ product.id }}" route class="image-container">
+                                        <img src="{{ base_url }}/{{ product.photo }}" class="card-img-top img-thumbnail mb-3" alt="{{ product.title }}" style="width: 100%; height: 200px; object-fit: cover;">
+                                        <b><div class="overlay-text" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-30deg);">VENDIDO</div></b>
+                                    </a>
+                                {% else %}
+                                    <a href="/products/{{ product.id }}" route class="image-container">
+                                        <img src="{{ base_url }}/{{ product.photo }}" class="card-img-top img-thumbnail mb-3" alt="{{ product.title }}" style="width: 100%; height: 200px; object-fit: cover;">
+                                    </a>
+                                {% endif %}
+                            
+                                <h5 class="card-title" style="font-size: 1.1em; font-weight: bold;">{{ product.title }}</h5>
+                                <p class="card-text"><strong>ID:</strong> {{ product.id }}</p>
+                                <p class="card-text"><strong>Precio:</strong> {{ product.price }} €</p>
+                                <p class="card-text"><strong>Categoría:</strong> {{ product.category.name | capitalize }}</p>
+                                <p class="card-text"><strong>Estado:</strong> {{ product.status.name }}</p>
+                                <p class="card-text"><strong>Vendido:</strong> 
+                                    {% if product.confirmed %}
+                                        <span class="badge bg-success">Sí</span>
+                                    {% else %}
+                                        <span class="badge bg-danger">No</span>
+                                    {% endif %}
+                                </p>
+                            </div>
+                            <div class="card-footer text-center">
+                                <a href="/products/{{ product.id }}" route class="btn btn-success">Ver Detalles</a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

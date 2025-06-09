@@ -1,0 +1,26 @@
+{% if items.length > 0 %}
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <!-- Generem les capçaleres de la taula de forma dinàmica -->
+      {% for key, value in items[0] %}
+        <th>{{ key | capitalize }}</th>
+      {% endfor %}
+    </tr>
+  </thead>
+  <tbody>
+    <!-- Generem les files de la taula per a cada producte -->
+    {% for item in items %}
+      <tr>
+        {% for key, value in item %}
+          <td>{{ value }}</td>
+        {% endfor %}
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<div class="alert alert-warning" role="alert">
+  No hi ha items a mostrar.
+</div>
+{% endif %}

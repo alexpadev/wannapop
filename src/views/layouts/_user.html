@@ -1,0 +1,6 @@
+{% if username %}
+Hello <span class="text-decoration-underline ms-2">{{ username }}</span>!
+<a route class="btn btn-secondary ms-4" href="/logout">Logout</a>
+{% else %}
+<a route class="btn btn-warning" href="/login">Login</a>
+{% endif %}

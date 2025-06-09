@@ -1,0 +1,53 @@
+<!-- Layout con Grid de 12 columnas y sidebar no fijo -->
+
+<div class="container-fluid">
+  <div class="row">
+    <!-- Sidebar - Menú lateral en 3 columnas -->
+    <aside id="sidebar" class="col-md-3 col-lg-2 bg-success text-white d-flex flex-column p-0">
+      <!-- Header del Sidebar -->
+      <div id="sidebar-header" class="d-flex flex-column align-items-center py-4">
+        <a href="https://vitejs.dev" target="_blank">
+          <img src="/vite.svg" class="logo-vite mb-3" alt="Vite logo" style="width: 80px;" />
+        </a>
+        <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank">
+          <img src="/src/assets/img/javascript.svg" class="logo-js" alt="JavaScript logo" style="width: 60px;" />
+        </a>
+      </div>
+
+      <!-- Menú de navegación en Sidebar -->
+      <div id="sidebar-menu" class="flex-grow-1 d-flex flex-column align-items-start px-3">
+        <nav id="navbarNav" class="nav flex-column w-100">
+          <a route class="nav-link text-white" href="/">Inicio</a>
+          <a route class="nav-link text-white" href="/authors">Authors</a>
+          <a route class="nav-link text-white" href="/counter">Counter</a>
+          <a route class="nav-link text-white" href="/users">Users</a>
+          <a route class="nav-link text-white" href="/products">Products</a>
+          {% if username %}
+            <a route class="nav-link text-white" href="/products/buy">Buy</a>
+            <a route class="nav-link text-white" href="/products/sell">Sell</a>
+          {% endif %}
+        </nav>
+      </div>
+
+      <!-- Usuario y botones de sesión -->
+      <div id="user" class="px-3 py-4 text-center">
+        {% if username %}
+          <p>Hello, <span class="text-decoration-underline">{{ username }}</span>!</p>
+          <a route class="btn btn-secondary" href="/logout">Logout</a>
+        {% else %}
+          <a route class="btn btn-warning" href="/login">Login</a>
+        {% endif %}
+      </div>
+    </aside>
+
+    <!-- Contenido principal en 9 columnas y scrolleable -->
+    <main id="content" class="col-md-9 col-lg-10 d-flex flex-column" style="height: 86.9vh; padding-top: 20px; overflow-y: scroll;">
+
+    </main>
+
+      <footer class="text-center text-white bg-success py-3 mt-auto w-100">
+        <p>MI FOOTER</p>
+        🄯 2024 <span class="fw-semibold">{{ developer }}</span>
+      </footer>
+  </div>
+</div>

@@ -1,0 +1,66 @@
+// Import all of Bootstrap's CSS
+@import "bootstrap/scss/bootstrap";
+
+/* Footer */
+footer {
+    background-color: $teal-200;
+}
+
+.div-principal {
+    padding:30px;
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px; 
+}
+
+.nav-link {
+    color:white; 
+    transition:color 0.1s ease;
+}
+
+.nav-link:hover {
+    color:rgba(255, 255, 255, 0.871);
+}
+
+.btn-warning {
+    background-color: rgb(255, 230, 0);
+    border:0;
+}
+
+.btn-warning:hover {
+    background-color: rgba(255, 230, 0, 0.931);
+}
+
+.logo-vite {
+    filter: drop-shadow(0 0 0 rgba(0,0,0,0));
+    transition: filter 0.2s ease;
+}
+
+.logo-vite:hover {
+    filter: drop-shadow(0 0 10px rgba(0,0,0,0.5));
+}
+
+.logo-js {
+    filter: drop-shadow(0 0 0 rgba(0,0,0,0));
+    transition: filter 0.2s ease; 
+}
+
+.logo-js:hover {
+    filter: drop-shadow(0 0 0.5px rgba(0,0,0,0.5));
+}
+
+
+.image-container {
+    position: relative;
+    display: inline-block;
+}
+
+.overlay-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 20px;
+    background-color: rgba(255, 0, 0, 0.726);
+    padding: 10px 15px;
+}
+
